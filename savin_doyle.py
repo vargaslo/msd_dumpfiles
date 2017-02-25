@@ -121,7 +121,7 @@ def estimators_to_file(list_of_trajs, outfile):
         return full
 
     with open(outfile, 'w', buffering=1) as fout:
-        fout.write("lagtime(frames)  MSDx MSDy MSDz  varMSDx varMSDy varMSDz  theta \n")
+        fout.write("# lagtime(frames)  MSDx MSDy MSDz  varMSDx varMSDy varMSDz  theta \n")
 
         # loop over lagtimes "n"
         for n in makelist():
