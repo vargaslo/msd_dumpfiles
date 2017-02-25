@@ -5,15 +5,14 @@ import read_lammps_dump
 import sys
 import matplotlib.pyplot as plt
 
-# python 1_format_dump.py <NF> <timestep> <timesteps_per_frame> <dumpfile>
+# python 1_format_dump.py <NF> <timestep> <dumpfile>
 #dumpfile = sys.argv[1]
 #timestep = 0.5   # timestep in fs
 #NF = 200       # integer or 'all'
 
 
-NF, timestep, timesteps_per_frame, dumpfile = sys.argv[1:5]
+NF, timestep, dumpfile = sys.argv[1:4]
 timestep = float(timestep)
-timesteps_per_frame = int(timesteps_per_frame)
 try:
     NF = int(NF)
 except:
@@ -36,6 +35,7 @@ def coord_transform(unwrapped, crystal):
     Mrev = my_utils.frac2xyzM(crystal)
 
     wrapped = my_utils.wrapcoords(unwrapped, crystal)
+    zw = wrapped[:,:,2]
 
     # get xyz coordinates of the four corners
     P1 = np.dot(Mrev, np.array([0.0, 0.0, 0]))[np.newaxis, np.newaxis, :]
@@ -59,6 +59,8 @@ def coord_transform(unwrapped, crystal):
     s = np.minimum(s1, s2)
     s = np.minimum(s, s3)
     s = np.minimum(s, s4)
+
+    szw = np.concatenate((s[:,:,np.newaxis], zw[:,:,np.newaxis]), axis=2)
 
     return s
 
@@ -106,6 +108,6 @@ def groupby_s(unwrapped, crystal):
     return
 
 
-t_ps, unwrapped = read_lammps_dump.read_dumpfile(dumpfile, timestep_fs=timestep, timesteps_per_frame=timesteps_per_frame, NF=NF)
+t_ps, unwrapped = read_lammps_dump.read_dumpfile(dumpfile, timestep_fs=timestep, NF=NF)
 groupby_s(unwrapped, crystal)
 
