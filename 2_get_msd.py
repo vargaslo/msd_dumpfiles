@@ -35,7 +35,6 @@ def process_dump(infile, timestep_fs):
     try:
         # read dump file and find regions
         list_of_trajs = read_infile(infile)
-        print ('trjs in file: {}'.format(len(list_of_trajs)))
     except:
         print ('read_file failed!')
         raise
