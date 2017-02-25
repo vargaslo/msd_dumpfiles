@@ -95,21 +95,21 @@ def groupby_s(unwrapped, crystal):
         fout.write('# ith xu yu zu s\n')
         for i,xyz in enumerate(micro_trj):
             for xyz_ in xyz:
-                fout.write('{} {} {} {} {}\n'.format(i, *xyz_))
+                fout.write('{} {} {} {} {:.3f}\n'.format(i, *xyz_))
 
     outfile = os.path.join(basedir, '_x_meso_NF{}.dat'.format(NF))
     with open(outfile, 'w') as fout:
         fout.write('# ith xu yu zu s\n')
         for i,xyz in enumerate(meso_trj):
             for xyz_ in xyz:
-                fout.write('{} {} {} {} {}\n'.format(i, *xyz_))
+                fout.write('{} {} {} {} {:.3f}\n'.format(i, *xyz_))
 
     outfile = os.path.join(basedir, '_x_composite_NF{}.dat'.format(NF))
     with open(outfile, 'w') as fout:
         fout.write('# ith xu yu zu s\n')
         for i,xyz in enumerate(composite_trj):
             for xyz_ in xyz:
-                fout.write('{} {} {} {} {}\n'.format(i, *xyz_))
+                fout.write('{} {} {} {} {:.3f}\n'.format(i, *xyz_))
 
     return
 
