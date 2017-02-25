@@ -3,6 +3,7 @@ import itertools
 import my_utils
 import read_lammps_dump
 import sys
+import os
 import matplotlib.pyplot as plt
 
 # python 1_format_dump.py <NF> <timestep> <dumpfile>
@@ -12,6 +13,8 @@ import matplotlib.pyplot as plt
 
 
 NF, timestep, dumpfile = sys.argv[1:4]
+
+basedir = os.path.dirname(dumpfile)
 timestep = float(timestep)
 try:
     NF = int(NF)
@@ -87,19 +90,22 @@ def groupby_s(unwrapped, crystal):
             else:
                 micro_trj.append(list(items))
 
-    with open('_x_micro_NF{}.dat'.format(NF), 'w') as fout:
+    outfile = os.path.join(basedir, '_x_micro_NF{}.dat'.format(NF))
+    with open(outfile, 'w') as fout:
         fout.write('# ith xu yu zu s\n')
         for i,xyz in enumerate(micro_trj):
             for xyz_ in xyz:
                 fout.write('{} {} {} {} {}\n'.format(i, *xyz_))
 
-    with open('_x_meso_NF{}.dat'.format(NF), 'w') as fout:
+    outfile = os.path.join(basedir, '_x_meso_NF{}.dat'.format(NF))
+    with open(outfile, 'w') as fout:
         fout.write('# ith xu yu zu s\n')
         for i,xyz in enumerate(meso_trj):
             for xyz_ in xyz:
                 fout.write('{} {} {} {} {}\n'.format(i, *xyz_))
 
-    with open('_x_composite_NF{}.dat'.format(NF), 'w') as fout:
+    outfile = os.path.join(basedir, '_x_composite_NF{}.dat'.format(NF))
+    with open(outfile, 'w') as fout:
         fout.write('# ith xu yu zu s\n')
         for i,xyz in enumerate(composite_trj):
             for xyz_ in xyz:
