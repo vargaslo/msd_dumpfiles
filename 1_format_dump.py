@@ -36,7 +36,6 @@ def coord_transform(unwrapped, crystal):
     Mrev = my_utils.frac2xyzM(crystal)
 
     wrapped = my_utils.wrapcoords(unwrapped, crystal)
-    zw = wrapped[:,:,2]
 
     # get xyz coordinates of the four corners
     P1 = np.dot(Mrev, np.array([0.0, 0.0, 0]))[np.newaxis, np.newaxis, :]
@@ -60,8 +59,6 @@ def coord_transform(unwrapped, crystal):
     s = np.minimum(s1, s2)
     s = np.minimum(s, s3)
     s = np.minimum(s, s4)
-
-    szw = np.concatenate((s[:,:,np.newaxis], zw[:,:,np.newaxis]), axis=2)
 
     return s
 
